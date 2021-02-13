@@ -1,0 +1,63 @@
+#include <bits/stdc++.h>
+using namespace std;
+struct node
+{
+    int data;
+    struct node* left;
+    struct node* right;
+}*root=NULL;
+struct node* Getnewnode(int data )
+{
+    struct node* newnode= new node;
+    newnode->data=data;
+    newnode->left=newnode->right=NULL;
+    return newnode;
+    
+}
+struct node* Insert(struct node* root, int data)
+{
+    if(root==NULL)
+    {
+        root=Getnewnode(data);
+    }
+    
+    else if(data<=root->data)
+    {
+        root->left= Insert(root->left,data);
+    }
+    else
+    {
+        root->right= Insert(root->right,data);
+    }
+    return root;
+}
+bool Isbinary(struct node* root , int minimum, int maximum)
+{
+    if(root==NULL)
+    return true;
+    if(root->data>minimum && root->data<maximum && Isbinary(root->left, minimum, root->data) &&
+    Isbinary(root->right, root->data, maximum))
+    return true;
+    else
+    return false;
+    
+}
+bool Isbinarysearch(struct node* root)
+{
+    return Isbinary(root, INT_MIN, INT_MAX);
+}
+int main()
+{
+    root=Insert(root,50);
+    root=Insert(root,30);
+    root=Insert(root,70);
+    root=Insert(root,20);
+    root=Insert(root,40);
+    root=Insert(root,60);
+    root=Insert(root,80);
+   if(Isbinarysearch(root)==1)
+    cout<<"Yes this is a binary Search Tree;";
+    else
+    cout<<"NOt";
+    return 0;
+}

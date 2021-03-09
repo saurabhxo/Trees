@@ -1,0 +1,59 @@
+#include <bits/stdc++.h>
+using namespace std;
+struct node
+{
+    int data;
+    struct node* left;
+    struct node* right;
+}*root=NULL;
+
+struct node* Getnewnode(int data)
+{
+    struct node* newnode= new node;
+    newnode->data=data;
+    newnode->right=newnode->left=NULL;
+    return newnode;
+}
+struct node* Insert(struct node* root,int data)
+{
+    if(root==NULL)
+    root=Getnewnode(data);
+    else if(data<=root->data)
+    {
+        root->left=Insert(root->left,data);
+    }
+    else 
+    {
+        root->right=Insert(root->right,data);
+    }
+    return root;
+}
+bool fun2( struct node* root,int B,set<int> &ump ){
+if(root==NULL) return false;
+if(ump.find(B-root->data)!=ump.end() ) {return true; }
+else {
+ump.insert(root->data);
+return (fun2(root->left,B,ump) ||fun2(root->right,B,ump) );
+
+}
+}
+int fun(struct node* root, int B) {
+set<int> ump;
+int ans = fun2(root,B,ump);
+
+
+return ans;
+}
+int main()
+{
+    root=Insert(root,10);
+    root=Insert(root,20);
+    root=Insert(root,30);
+    root=Insert(root,8);
+    root=Insert(root,4);
+    root=Insert(root,9);
+    root=Insert(root,3);
+    int key=30;
+    cout<<fun(root,key);
+    return 0;
+}

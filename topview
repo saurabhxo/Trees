@@ -1,0 +1,36 @@
+void topviewhelper(struct node* root, int i, unordered_map<int , int >&mp )
+{
+    if(root==NULL)
+        return;
+    if(mp.count(i)==0)
+    {
+        mp.insert({i, root->data});
+    }
+    topviewhelper(root->left, i-1, mp);
+    topviewhelper(root->right, i+1, mp);
+}
+void topview(struct node* root)
+{
+    unordered_map<int , int >mp;
+    topviewhelper(root, 0, mp);
+    int mini=INT_MAX;
+    int maxi=INT_MIN;
+    for(auto it=mp.begin(); it!=mp.end();it++)
+    {
+        if(it->first<mini)
+        {
+            mini=it->first;
+        }
+        if(it->first>maxi)
+        {
+            maxi=it->first;
+        }
+    }
+    int i=mini;
+    while(i<=maxi)
+    {
+        cout<<mp[i]<<" ";
+        i++;
+    }
+   }
+}

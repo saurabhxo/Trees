@@ -1,0 +1,21 @@
+void verticalhelper(struct node* root, int i, unordered_map<int , vector<int> >&mp )
+{
+    if(root==NULL)
+        return;
+
+        mp[i].push_back(root->data);
+    verticalhelper(root->left, i-1, mp);
+    verticalhelper(root->right, i+1, mp);
+}
+void vertical(struct node* root)
+{
+    unordered_map<int , vector<int> >mp;
+    verticalhelper(root, 0, mp);
+    for (auto it=mp.begin(); it!=mp.end(); it++)
+    {
+        for (int i=0; i<it->second.size(); ++i)
+            cout << it->second[i] << " ";
+        cout << endl;
+    }
+
+}

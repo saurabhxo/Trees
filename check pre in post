@@ -43,18 +43,16 @@ struct node* buildhelper(int pre[], int in[], int inlo, int inhi, unordered_map<
     t->right= buildhelper(pre, in, s+1, inhi, mp);
     return t;
 }
-int post(struct node* root, int pos[], int index)
+int index=0;
+void post(struct node* root, int pos[])
 {
     if(root==NULL)
-        return index;
-    index=post( root->left, pos, index);
-    index=post( root->right, pos, index);
+        return ;
+   post( root->left, pos);
+    post( root->right, pos);
     if(root->data==pos[index])
         index++;
-    else
-        return -1;
 
-    return index;
 }
 int main()
 {
@@ -69,7 +67,7 @@ int main()
         mp[in[i]]=i;
     }
     root=buildhelper(pre, in, 0, len-1, mp );
-    int index=post( root,pos, 0);
+    post( root,pos);
     //cout<<index;
     if(len==index)
         cout<<"yes";
